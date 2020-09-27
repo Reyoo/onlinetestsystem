@@ -1,0 +1,106 @@
+plugins {
+    id("org.springframework.boot") version "2.3.4.RELEASE"
+    id("io.spring.dependency-management") version "1.0.10.RELEASE"
+}
+apply plugin: "java"
+apply plugin: "application"
+apply plugin: 'org.springframework.boot'
+apply plugin: 'io.spring.dependency-management'
+
+group 'com.onlineedu.outsource'
+version '1.0-SNAPSHOT'
+
+sourceCompatibility = 1.8
+targetCompatibility = 1.8
+
+
+mainClassName = "com.onlineedu.outsource.OnlineTestEducationApplication"
+
+tasks.withType(JavaCompile) {
+    options.encoding = 'UTF-8'
+}
+
+sourceSets {
+    main {
+        java {
+            srcDirs = ['src/main/java']
+        }
+    }
+
+}
+
+
+repositories {
+    mavenLocal()
+    maven { url "https://maven.aliyun.com/repository/public" }
+    maven { url 'https://jitpack.io' }
+    maven { url 'https://www.apache.org/licenses/LICENSE-2.0' }
+}
+
+dependencyManagement {
+    imports {
+        mavenBom 'com.alibaba.cloud:spring-cloud-alibaba-dependencies:2.2.1.RELEASE'
+    }
+}
+
+dependencies {
+    testCompile group: 'junit', name: 'junit'
+    compile group: 'org.springframework.cloud', name: 'spring-cloud-starter-openfeign', version: '2.2.1.RELEASE'
+    compile group: 'org.springframework.boot', name: 'spring-boot-starter-security'
+    compile group: 'org.springframework.boot', name: 'spring-boot-starter-web'
+    compile group: 'com.alibaba.cloud', name: 'spring-cloud-starter-alibaba-nacos-discovery'
+    compile group: 'org.springframework.boot', name: 'spring-boot-devtools'
+    compile group: 'org.projectlombok', name: 'lombok'
+    compile group: 'org.springframework.boot', name: 'spring-boot-starter-aop'
+    compile group: 'org.springframework.security', name: 'spring-security-test'
+    compile group: 'com.baomidou', name: 'mybatis-plus-boot-starter', version: '3.4.0'
+    compile group: 'com.alibaba', name: 'druid', version: '1.1.23'
+    compile group: 'mysql', name: 'mysql-connector-java'
+    compile group: 'org.springframework.security', name: 'spring-security-jwt', version: '1.0.10.RELEASE'
+    compile group: 'cn.hutool', name: 'hutool-all', version: '5.4.1'
+    compileOnly 'org.projectlombok:lombok'
+    annotationProcessor 'org.projectlombok:lombok'
+//    testCompileOnly 'org.projectlombok:lombok:1.16.22'
+//    testAnnotationProcessor 'org.projectlombok:lombok:1.16.22'
+}
+
+ext {
+    snippetsDir = file('build/generated-snippets')
+}
+
+test {
+    outputs.dir snippetsDir
+}
+
+
+task createConfig {
+    def configDir = file("build/config")
+    outputs.dir configDir
+    doLast {
+        configDir.mkdirs()
+    }
+}
+
+task copyConfig(type: Copy) {
+    from("src/main/resources") {
+        include "**/*.yml"
+        include "**/*.properties"
+    }
+    into "build/config"
+    dependsOn createConfig
+}
+
+distributions {
+    main {
+        baseName = "app"
+        version = ""
+        contents {
+            eachFile {
+                rename(project.name, "startup")
+            }
+            from(copyConfig) {
+                into "config"
+            }
+        }
+    }
+}
