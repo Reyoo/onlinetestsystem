@@ -64,11 +64,12 @@ dependencies {
     compile 'com.alibaba:druid:1.1.23'
     compile 'org.springframework.security:spring-security-jwt:1.0.10.RELEASE'
     compile group: 'cn.hutool', name: 'hutool-all', version: '5.4.1'
+    compile 'mysql:mysql-connector-java'
     compileOnly 'org.projectlombok:lombok'
     annotationProcessor 'org.projectlombok:lombok'
 
     testCompile 'junit:junit'
-    annotationProcessor 'mysql:mysql-connector-java'
+//    annotationProcessor 'mysql:mysql-connector-java'
     testCompileOnly 'org.springframework.boot:spring-boot-starter-test'
 
 }
