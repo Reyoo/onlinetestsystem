@@ -32,7 +32,7 @@ spring:
     driver-class-name: com.mysql.cj.jdbc.Driver
     url: jdbc:mysql://123.57.130.90:33306/sunqitest?useUnicode=true&characterEncoding=utf-8&serverTimezone=Hongkong
     username: root
-    password: 赞华老安全密码
+    password: 123qwe!@#
     type: com.alibaba.druid.pool.DruidDataSource
     filters: stat
     maxActive: 5

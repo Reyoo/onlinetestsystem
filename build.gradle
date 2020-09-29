@@ -4,8 +4,12 @@ plugins {
 }
 apply plugin: "java"
 apply plugin: "application"
-apply plugin: 'org.springframework.boot'
-apply plugin: 'io.spring.dependency-management'
+apply plugin: "org.springframework.boot"
+apply plugin: "io.spring.dependency-management"
+
+tasks.withType(JavaCompile) {
+    options.encoding = 'UTF-8'
+}
 
 group 'com.onlineedu.outsource'
 version '1.0-SNAPSHOT'
@@ -16,9 +20,13 @@ targetCompatibility = 1.8
 
 mainClassName = "com.onlineedu.outsource.OnlineTestEducationApplication"
 
-tasks.withType(JavaCompile) {
-    options.encoding = 'UTF-8'
+jar {
+    archiveName = project.name + "-" + project.version + ".jar"
+//    from('src/main/webapp/static'){
+//        into 'static'
+//    }
 }
+
 
 sourceSets {
     main {
@@ -44,24 +52,25 @@ dependencyManagement {
 }
 
 dependencies {
-    testCompile group: 'junit', name: 'junit'
-    compile group: 'org.springframework.cloud', name: 'spring-cloud-starter-openfeign', version: '2.2.1.RELEASE'
-    compile group: 'org.springframework.boot', name: 'spring-boot-starter-security'
-    compile group: 'org.springframework.boot', name: 'spring-boot-starter-web'
-    compile group: 'com.alibaba.cloud', name: 'spring-cloud-starter-alibaba-nacos-discovery'
-    compile group: 'org.springframework.boot', name: 'spring-boot-devtools'
-    compile group: 'org.projectlombok', name: 'lombok'
-    compile group: 'org.springframework.boot', name: 'spring-boot-starter-aop'
-    compile group: 'org.springframework.security', name: 'spring-security-test'
-    compile group: 'com.baomidou', name: 'mybatis-plus-boot-starter', version: '3.4.0'
-    compile group: 'com.alibaba', name: 'druid', version: '1.1.23'
-    compile group: 'mysql', name: 'mysql-connector-java'
-    compile group: 'org.springframework.security', name: 'spring-security-jwt', version: '1.0.10.RELEASE'
+    compile 'org.springframework.cloud:spring-cloud-starter-openfeign:2.2.1.RELEASE'
+    compile 'org.springframework.boot:spring-boot-starter-security'
+    compile 'org.springframework.boot:spring-boot-starter-web'
+    compile 'com.alibaba.cloud:spring-cloud-starter-alibaba-nacos-discovery'
+    compile 'org.springframework.boot:spring-boot-devtools'
+    compile 'org.projectlombok:lombok'
+    compile 'org.springframework.boot:spring-boot-starter-aop'
+    compile 'org.springframework.security:spring-security-test'
+    compile 'com.baomidou:mybatis-plus-boot-starter:3.4.0'
+    compile 'com.alibaba:druid:1.1.23'
+    compile 'org.springframework.security:spring-security-jwt:1.0.10.RELEASE'
     compile group: 'cn.hutool', name: 'hutool-all', version: '5.4.1'
     compileOnly 'org.projectlombok:lombok'
     annotationProcessor 'org.projectlombok:lombok'
-//    testCompileOnly 'org.projectlombok:lombok:1.16.22'
-//    testAnnotationProcessor 'org.projectlombok:lombok:1.16.22'
+
+    testCompile 'junit:junit'
+    annotationProcessor 'mysql:mysql-connector-java'
+    testCompileOnly 'org.springframework.boot:spring-boot-starter-test'
+
 }
 
 ext {
