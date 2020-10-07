@@ -1,6 +1,7 @@
 package com.onlineedu.outsource.onlineedu.entity;
 
 import com.baomidou.mybatisplus.annotation.IdType;
+import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -61,7 +62,8 @@ public class Homepage implements Serializable {
     /**
      * 排序
      */
-    private Integer order;
+    @TableField("show_order")
+    private Integer showOrder;
 
     /**
      * 是否开启
