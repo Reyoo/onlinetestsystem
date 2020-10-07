@@ -31,8 +31,8 @@ spring:
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
     url: jdbc:mysql://123.57.130.90:33306/sunqitest?useUnicode=true&characterEncoding=utf-8&serverTimezone=Hongkong
-    username:
-    password:
+    username: root
+    password: 123qwe!@#
     type: com.alibaba.druid.pool.DruidDataSource
     filters: stat
     maxActive: 5
@@ -80,7 +80,6 @@ mybatis-plus:
       field-strategy: NOT_EMPTY
       #数据库类型
       db-type: MYSQL
-
   configuration:
     # 是否开启自动驼峰命名规则映射:从数据库列名到Java属性驼峰命名的类似映射
     map-underscore-to-camel-case: true

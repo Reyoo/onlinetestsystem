@@ -1,0 +1,25 @@
+version: "3.4"
+
+services:
+  firstmeet-boss-web-manager:
+    env_file:
+      - onlinetestsystem.env
+    image: docker1t.16801.com/fms/onlinetestsystem:1.0-SNAPSHOT
+                       environment: { JAVA_OPTS: '-XX:+HeapDumpOnOutOfMemoryError -XX:HeapDumpPath=/work/heapdump.hprof
+                                                                                                -Duser.timezone=GMT+08 -Dfile.encoding=UTF-8 -Xms1024m -Xmx2048m -XX:+UseG1GC
+                                                                                                -verbose:gc -XX:+HeapDumpOnOutOfMemoryError -XX:+PrintGCDetails -XX:+PrintGCTimeStamps
+                                                                                                -XX:+PrintGCDateStamps -Xloggc:/work/logs/gc.log' }
+                         volumes: [ '/data/boss2/app/config:/app/config','/etc/localtime:/etc/localtime','/data/logs:/app/logs' ]
+                         #volumes: ['/etc/localtime:/etc/localtime','/data/logs:/app/logs']
+                         #volumes: ['/etc/localtime:/etc/localtime']
+                         ports: [ "8383:8383" ]
+                         deploy:
+                           mode: global
+                           restart_policy: { condition: on-failure, delay: 5s, max_atempts: 3}
+      update_config: {delay: 5s, parallelism: 1}
+    networks:
+      envoymesh:
+        aliases: [onlinetestsystem]
+
+networks:
+  envoymesh: {driver: overlay}
