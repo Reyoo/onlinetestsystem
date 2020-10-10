@@ -24,8 +24,8 @@ public class SysPic implements Serializable {
     /**
      * 自增ID
      */
-    @TableId(value = "id", type = IdType.AUTO)
-    private Integer id;
+    @TableId(value = "pic_id", type = IdType.AUTO)
+    private Integer picId;
 
     /**
      * 模板ID
